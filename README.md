@@ -8,6 +8,8 @@
 |
 <b><a href="https://memoriasit.github.io/">screenshots & demos</a></b>
 |
+<b><a href="https://memoriasit.github.io/">quick start</a></b>
+|
 <b><a href="https://memoriasit.github.io/">documentation</a></b>
 </p>
 
@@ -22,16 +24,11 @@
 - [Documentation](#documentation)
 - [Getting Help](#getting-help)
 - [Prerequisites](#prerequisites)
-    - [Emacs](#emacs)
-        - [Linux distros](#linux-distros)
-        - [macOS](#macos)
-        - [Windows](#windows)
 - [Install](#install)
     - [Default installation](#default-installation)
     - [Alternate installations](#alternate-installations)
         - [Modify HOME environment variable](#modify-home-environment-variable)
         - [Modify spacemacs-start-directory variable](#modify-spacemacs-start-directory-variable)
-    - [Spacemacs logo](#spacemacs-logo)
 - [Update](#update)
     - [Automatic update (on master branch)](#automatic-update-on-master-branch)
     - [Manual update (on master branch)](#manual-update-on-master-branch)
@@ -58,3 +55,125 @@ Vash is currently in alpha, contributions will be open in beta stage.
 *Add screenshot*
 ![screenshot](/docs/screenshot1.png)
 
+# Features
+
+- **Vim:** use all your favorite vim features. 
+- **Autocompletion:** autocompletion of commands based on your previous history.
+- **Distraction free:** minimal UI to achieve focus in what really matters.
+- **Documentation:** access the documentation with "*man vash*" or in the <a href="memoriasit.github.io"> project
+page</a>.
+
+# Documentation
+
+Comprehensive documentation is available in "*man vash*" or in the <a href="memoriasit.github.io"> project
+page</a>.
+
+You can also check the <a href="memoriasit.github.io"> Quick Start</a>, and the You can also check the <a href="memoriasit.github.io"> FAQ </a>.
+
+# Getting Help
+
+I am always down to help someone interested in my tools, so if you are strugling with it or just would like to chat about it, just reach to me on twitter <a href="https://twitter.com/memoriasit">@memoriasIT</a>
+
+# Prerequisites
+
+## idk yet
+
+lorem ipsum dolor sit amet bla bla bla
+
+# Install
+
+## Default installation
+
+1. Ifdsafasd.
+
+## Alternate installations
+
+fdsafsda
+
+# Update
+
+fdsafsda
+
+## Automatic update (on master branch)
+
+fdsa.
+
+## Manual update (on master branch)
+
+fdsa
+
+## On develop branch
+
+1. he upgrade.
+
+## Revert to a specific version
+
+To rev
+
+
+# Contributions
+
+not open yet
+
+# License
+
+cxzvxczvxz
+
+# Supporting Vash
+
+adsfasd
+
+
+
+
+# Splash Screen
+
++--------------------+
+|                    |
+|         -          |
+|      -------       |
+|       --- -        |
+|                    |
+| ---                |
++--------------------+
+
+- Similar to Vim
+- Version in a global variable
+- Settings, like vimrc
+
+
+# Command-Line
+
++--------------------+
+| @user ~            |
+| cd test/           |
+|                    |
+|                    |
+|                    |
+| ---                |
++--------------------+
+
+- Git integration
+- Functional programming
+- Pipes
+- Exec and print
+
+- Average user
+'''
+    @user ~
+    cd test/
+'''
+
+
+- Root as bold
+'''
+    @r00t ~
+    cd test/
+'''
+
+
+- User with git
+'''
+    @user - master ~
+    cd test/
+'''
