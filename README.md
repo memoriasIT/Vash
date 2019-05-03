@@ -27,8 +27,6 @@
 - [Install](#install)
     - [Default installation](#default-installation)
     - [Alternate installations](#alternate-installations)
-        - [Modify HOME environment variable](#modify-home-environment-variable)
-        - [Modify spacemacs-start-directory variable](#modify-spacemacs-start-directory-variable)
 - [Update](#update)
     - [Automatic update (on master branch)](#automatic-update-on-master-branch)
     - [Manual update (on master branch)](#manual-update-on-master-branch)
