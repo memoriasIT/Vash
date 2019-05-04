@@ -1,6 +1,6 @@
 
 
-<p align="center"><img src="/docs/vash.png" alt="Spacemacs"/></p>
+<p align="center"><img src="/docs/vash.png" alt="V-ash"/></p>
 <p align="center">
 <b><a href="https://memoriasit.github.io/">why?</a></b>
 |
