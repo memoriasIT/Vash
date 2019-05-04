@@ -30,6 +30,7 @@
 */
 
 #include "job_control.h"    // Get command and job control
+#include "config.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -42,6 +43,7 @@
 #include <errno.h>
 #include <string.h>
 
+#include <libgen.h>         // Basename
 
 // Maximum characters per line
 #define MAX_LINE 256
@@ -63,7 +65,8 @@ int main(void){
     
     // Program ends in get_command() if ^D signal is received
     while (1){
-        printf(" UserID ~\n  ~$ ");
+        // Print shell line, edit in config.h
+        PRINTSHELLID; 
         fflush(stdout);
         
         // Gets and processes next command
@@ -75,7 +78,7 @@ int main(void){
         pid_fork = fork();
 
         if (pid_fork == -1) { // Check if fork was created correctly
-            fprintf(stderr, "[!] - Error while forking: %s\n", strerror(errno));
+            fprintf(stderr, ERRORSTR" - Error while forking: %s\n", strerror(errno));
         }
 
         if (pid_fork == 0){
@@ -89,7 +92,7 @@ int main(void){
             execvp(args[0], args);
             
             // If this gets executed execvp failed
-            fprintf(stderr, "[!] - Error in exec: %s\n", strerror(errno));
+            fprintf(stderr, ERRORSTR"- Error in exec: %s\n", strerror(errno));
             exit(EXIT_FAILURE);
         
         } else {
