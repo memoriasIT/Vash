@@ -1,6 +1,6 @@
 make:
 	gcc -c *.c
-	gcc -o Vash *.o
+	gcc -o bin/Vash *.o
 
 clean:
 	rm *.o
