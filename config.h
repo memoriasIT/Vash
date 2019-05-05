@@ -25,7 +25,7 @@
 // USER ID PRINTED EVERY LINE
 #define PRINTSHELLID { \
     char cwd[255];  getcwd(cwd, 255);\
-    printf(BOLDBLACK" %s ~\n  ~%s"RESET"$ ", getenv("USER"), cwd); \
+    printf(BOLDBLACK"\n %s ~\n  ~%s"RESET"$ ", getenv("USER"), cwd); \
     }
 
 #endif
