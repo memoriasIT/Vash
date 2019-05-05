@@ -77,7 +77,7 @@ int main(void){
         // Check if command is internal
         // If internal, function called in internalCommands.c and return 0
         // Else return -1 and a fork is needed
-        if (isInternal(args[0]) == -1){
+        if (isInternal((const char*) args) == -1){
             // Child created
             pid_fork = fork();
 
