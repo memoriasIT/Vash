@@ -58,15 +58,15 @@ Vash is currently in alpha, contributions will be open in beta stage.
 - **Vim:** use all your favorite vim features. 
 - **Autocompletion:** autocompletion of commands based on your previous history.
 - **Distraction free:** minimal UI to achieve focus in what really matters.
-- **Documentation:** access the documentation with "*man vash*" or in the <a href="memoriasit.github.io"> project
-page</a>.
+- **Documentation:** access the documentation with "*man vash*" or in the <a href="memoriasit.github.io"> project page</a>.
 
 # Documentation
 
 Comprehensive documentation is available in "*man vash*" or in the <a href="memoriasit.github.io"> project
 page</a>.
 
-You can also check the <a href="memoriasit.github.io"> Quick Start</a>, and the You can also check the <a href="memoriasit.github.io"> FAQ </a>.
+You can also check the <a href="memoriasit.github.io"> Quick Start</a>, and the <a href="memoriasit.github.io"> FAQ </a>.
+
 
 # Getting Help
 
@@ -74,9 +74,7 @@ I am always down to help someone interested in my tools, so if you are strugling
 
 # Prerequisites
 
-## idk yet
-
-lorem ipsum dolor sit amet bla bla bla
+None by now, just a beautiful unix machine you are confortable with.
 
 # Install
 
@@ -111,67 +109,17 @@ To rev
 
 # Contributions
 
-not open yet
+Vash is currently in alpha, when core functionalities work correctly contributions will be opened.
+This will also open several branches which have to be discussed yet.
+
 
 # License
 
-cxzvxczvxz
+The project is licensed with General Public License (GPL), therefore, users can run, share and modify the software.
+It is a copyleft license and teh same rights must be preseved if copies are distributed.
 
 # Supporting Vash
 
-adsfasd
+I am not accepting any money, however, sharing the project, contributing or just letting me know your thoughts about Vash would make me very happy.
+You can find me on twitter with the handle @memoriasIT
 
-
-
-
-# Splash Screen
-
-+--------------------+
-|                    |
-|         -          |
-|      -------       |
-|       --- -        |
-|                    |
-| ---                |
-+--------------------+
-
-- Similar to Vim
-- Version in a global variable
-- Settings, like vimrc
-
-
-# Command-Line
-
-+--------------------+
-| @user ~            |
-| cd test/           |
-|                    |
-|                    |
-|                    |
-| ---                |
-+--------------------+
-
-- Git integration
-- Functional programming
-- Pipes
-- Exec and print
-
-- Average user
-'''
-    @user ~
-    cd test/
-'''
-
-
-- Root as bold
-'''
-    @r00t ~
-    cd test/
-'''
-
-
-- User with git
-'''
-    @user - master ~
-    cd test/
-'''
