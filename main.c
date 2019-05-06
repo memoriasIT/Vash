@@ -65,6 +65,9 @@ int main(void){
     
     // Program ends in get_command() if ^D signal is received
     while (1){
+        // Ignore signals related to terminal
+        ignore_terminal_signals();
+
         // Print shell line, edit in config.h
         PRINTSHELLID; 
         fflush(stdout);
@@ -88,10 +91,12 @@ int main(void){
             if (pid_fork == 0){
                 // [----------------- CHILDREN CODE ONLY! ------------------------]
                 // 
-                // restore signals and add to process group
-                restore_terminal_signals();
+                // Child processes are assigned a gid that differs from parent id
                 new_process_group(getpid());
-                
+ 
+                // restore signals and add to process group
+                restore_terminal_signals();               
+
                 // Execute with given arguments
                 execvp(args[0], args);
                 
@@ -103,34 +108,45 @@ int main(void){
                 // [------------------ PARENT CODE ONLY! -------------------------]
                 // 
                 if (background == 0){ // We execute in foreground
-                    //set_terminal(pid_fork); // Set the control of terminal to child
+                    set_terminal(pid_fork); // Set the control of terminal to child
                   
                     // We wait child, check man 2 wait for options details
                     pid_wait = waitpid(pid_fork, &status, WUNTRACED);
-                    status_res = analyze_status(status, &info);
 
+                    // Retrieve control of terminal
+                    set_terminal(getpid()); 
+
+                    // Get status of process
+                    status_res = analyze_status(status, &info);
 
                     // Print info about the process
                     fprintf(stderr, "Foreground pid: %d, command: %s, %s, info: %d\n",
                             pid_fork, args[0], status_strings[status_res], info);
 
-                    // Retrieve control of terminal
-                    //set_terminal(getpid()); 
                     
                     // Print information about the process
                     if (status_res != EXITED) {
                         // Process was exited
+                         fprintf(stderr, "pid: %d, command: %s was exited.\n",
+                            pid_fork, args[0]);
+   
                     } else if (status_res == SIGNALED) {
                         // Process was signaled
+                        fprintf(stderr, "pid: %d, command: %s was signaled.\n",
+                            pid_fork, args[0]);
+
                     } else {
                         // Process was suspended
+                        fprintf(stderr, "pid: %d, command: %s was suspended.\n",
+                            pid_fork, args[0]);
+   
                     }
 
 
                 } else { // We execute in background
                     fprintf(stderr, "Background job running... pid: %d, command: %s\n", 
                             pid_fork, args[0]);
-                
+                    
                 } // end of bg job
         
         
