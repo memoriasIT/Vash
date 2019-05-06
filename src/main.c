@@ -32,6 +32,7 @@
 #include "job_control.h"        // Get command and job control
 #include "config.h"             // Configuration of messages and styles
 #include "internalCommands.h"   // Internal shell commands
+#include "signalHandler.h"      // TODO: make signal handler
 
 #include <stdio.h>
 #include <stdlib.h>
