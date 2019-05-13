@@ -1,0 +1,31 @@
++-------------------------------+
+| (1)   DO NOT SHOW FULL PATH   |
++-------------------------------+
+
+praiseth3riceg0ds ~
+  ~/home/praiseth3riceg0ds/desktop/Vash/src$ 
+
+
+ memoriasIT ~  
+  ~/desktop/Vash/src$ 
+
++----------------------------------------------------+
+| (2)   AFTER FINISHED IT DOESN'T PRINT THE PATH     |
+|       (Also printed output when signaled is f* up) |
++----------------------------------------------------+
+
+ praiseth3riceg0ds ~
+  ~/home/praiseth3riceg0ds/desktop/Vash/src$ config.h	    internalCommands.o	job_control.o  Makefile		signalHandler.o
+internalCommands.c  job_control.c	main.c	       signalHandler.c	vash_globals.h
+internalCommands.h  job_control.h	main.o	       signalHandler.h
+[!] - Job 'ls' was finished.
+
+
++----------------------------------------------------+
+| (3)   BE ABLE TO DELETE ^C AND OTHER COMMANDS      |
++----------------------------------------------------+
+
+memoriasIT ~  
+  ~/desktop/Vash/src$ ^C
+
+

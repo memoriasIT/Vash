@@ -32,7 +32,7 @@
 #include "job_control.h"        // Get command and job control
 #include "config.h"             // Configuration of messages and styles
 #include "internalCommands.h"   // Internal shell commands
-#include "signalHandler.h"      // TODO: make signal handler
+#include "signalHandler.h"      // Signal handler for shell (not GUI)
 #include "vash_globals.h"       // Manage global variables
 
 
@@ -51,7 +51,8 @@
 // Maximum characters per line
 #define MAX_LINE 256
 
-//job* job_list;              // List of jobs (found in job_control.h)
+// List of jobs (found in job_control.h)
+job* job_list;
 
     
 // [--------------------------------------------------------------------------]
@@ -67,7 +68,6 @@ int main(void){
     int status;                 // Status returned by wait
     enum status status_res;     // Status processed by analyze_status()
     int info;                   // Info processed by analyze_status()
-    job* job_list;              // List of jobs (found in job_control.h)
 
    
     // Create the job list
@@ -177,7 +177,7 @@ int main(void){
                     // Job control to avoid defunct processes
                     // void add_job(job *list, job*item)
                     // job* new_job(pid_t pid, const char *command, enum job_state state)
-                    //add_job(job_list, new_job(pid_fork, args[0], BACKGROUND));
+                    add_job(job_list, new_job(pid_fork, args[0], BACKGROUND));
                     
                     fprintf(stderr, "Background job running... pid: %d, command: %s\n", 
                             pid_fork, args[0]);
