@@ -1,5 +1,6 @@
-#ifndef SIGHANDLER
+#ifndef VASH_SIGHANDLER
+#define VASH_SIGHANDLER
 
-void signalHandler(int signal);
+void vash_signalHandler(int signal);
 
-#endif // SIGHANDLER
+#endif // VASH_SIGHANDLER

@@ -33,6 +33,8 @@
 #include "config.h"             // Configuration of messages and styles
 #include "internalCommands.h"   // Internal shell commands
 #include "signalHandler.h"      // TODO: make signal handler
+#include "vash_globals.h"       // Manage global variables
+
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -49,6 +51,9 @@
 // Maximum characters per line
 #define MAX_LINE 256
 
+//job* job_list;              // List of jobs (found in job_control.h)
+
+    
 // [--------------------------------------------------------------------------]
 // [                                 MAIN                                     ]
 // [--------------------------------------------------------------------------]
@@ -62,8 +67,16 @@ int main(void){
     int status;                 // Status returned by wait
     enum status status_res;     // Status processed by analyze_status()
     int info;                   // Info processed by analyze_status()
+    job* job_list;              // List of jobs (found in job_control.h)
 
-    
+   
+    // Create the job list
+    job_list = new_list("ShellJobs");
+
+    // Specify Signal Handler
+    signal(SIGCHLD, vash_signalHandler);
+
+
     // Program ends in get_command() if ^D signal is received
     while (1){
         // Ignore signals related to terminal
@@ -74,10 +87,16 @@ int main(void){
         fflush(stdout);
         
         // Gets and processes next command
+        // SIGCHLD is blocked due to critical section
+        //block_SIGCHLD();
         get_command(inputBuffer, MAX_LINE, args, &background);
 
-        if (args[0] == NULL) continue; // Command is empty
-      
+
+        if (args[0] == NULL){// Command is empty
+            //unblock_SIGCHLD();             
+            continue;
+        }
+
         // Check if command is internal
         // If internal, function called in internalCommands.c and return 0
         // Else return -1 and a fork is needed
@@ -92,9 +111,12 @@ int main(void){
             if (pid_fork == 0){
                 // [----------------- CHILDREN CODE ONLY! ------------------------]
                 // 
+                // Unblock in children, blocked since get_command input
+                //unblock_SIGCHLD();
+                
                 // Child processes are assigned a gid that differs from parent id
                 new_process_group(getpid());
- 
+
                 // restore signals and add to process group
                 restore_terminal_signals();               
 
@@ -109,6 +131,7 @@ int main(void){
                 // [------------------ PARENT CODE ONLY! -------------------------]
                 // 
                 if (background == 0){ // We execute in foreground
+                    //unblock_SIGCHLD(); // End of critical section             
                     set_terminal(pid_fork); // Set the control of terminal to child
                   
                     // We wait child, check man 2 wait for options details
@@ -121,30 +144,41 @@ int main(void){
                     status_res = analyze_status(status, &info);
 
                     // Print info about the process
-                    fprintf(stderr, "Foreground pid: %d, command: %s, %s, info: %d\n",
+                    fprintf(stderr, "\nForeground pid: %d, command: %s, %s, info: %d\n",
                             pid_fork, args[0], status_strings[status_res], info);
 
                     
                     // Print information about the process
                     if (status_res != EXITED) {
                         // Process was exited
-                         fprintf(stderr, "pid: %d, command: %s was exited.\n",
+                         fprintf(stderr, "\tpid: %d, command: %s was exited.\n",
                             pid_fork, args[0]);
    
                     } else if (status_res == SIGNALED) {
                         // Process was signaled
-                        fprintf(stderr, "pid: %d, command: %s was signaled.\n",
+                        fprintf(stderr, "\tpid: %d, command: %s was signaled.\n",
                             pid_fork, args[0]);
 
                     } else {
                         // Process was suspended
-                        fprintf(stderr, "pid: %d, command: %s was suspended.\n",
+                        //add_job(job_list, new_job(pid_fork, args[0], STOPPED));
+                        
+                        fprintf(stderr, "\tpid: %d, command: %s was suspended.\n",
                             pid_fork, args[0]);
    
                     }
 
+                    // End of critical section
+                    // Blocked since getting command input 
+                    //unblock_SIGCHLD();
+
 
                 } else { // We execute in background
+                    // Job control to avoid defunct processes
+                    // void add_job(job *list, job*item)
+                    // job* new_job(pid_t pid, const char *command, enum job_state state)
+                    //add_job(job_list, new_job(pid_fork, args[0], BACKGROUND));
+                    
                     fprintf(stderr, "Background job running... pid: %d, command: %s\n", 
                             pid_fork, args[0]);
                     

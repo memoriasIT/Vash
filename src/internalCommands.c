@@ -7,14 +7,17 @@
 #include <errno.h>
 
 // Internal functions
-void cd(int nargs, char* args[]);
+void cd(int nargs, const char* args[]);
 
 // Map function in struct
-const static struct {
+typedef struct {
     const char *name;
     void (*func) (int, const char**);
-} function_map[] = {
+} vash_functionmap;
+
+static vash_functionmap internal_funcs[] = {
     { "cd", cd },
+    { NULL, NULL }
 };
 
 
@@ -30,22 +33,24 @@ int numofargs(const char *command[]){
 
 
 // Check if command is internal, if internal execute, else return -1 to main.c
-// https://stackoverflow.com/questions/1118705/call-a-function-named-in-a-string-variable-in-c
 int isInternal(const char *command[]) {
-    unsigned long i;
-    for (i = 0; i < (sizeof(function_map) / sizeof(function_map[0])); i++){
-        if (!strcmp(function_map[i].name, command[0]) && function_map[i].func){
-            function_map[i].func(numofargs(command), command); //
-            return 0;
+    // Use pointer to go through function map
+    vash_functionmap * ptr;
+    for (ptr = internal_funcs; ptr->name != NULL; ptr++) {
+        if (!strcmp(ptr->name, command[0])){ 
+          // Command found execute and return 0
+          ptr->func(numofargs(command), command);
+          
+          return 0;
         }
+        
     }
-
     // Command is not internal, return error
     return -1;
 }
 
 
-void cd(int nargs, char* args[]){
+void cd(int nargs, const char* args[]){
     if (nargs == 1){
         // Only cd command specified, goto home folder
             chdir(getenv("HOME"));
