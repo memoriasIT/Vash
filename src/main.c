@@ -79,6 +79,10 @@ int main(void){
 
     // Program ends in get_command() if ^D signal is received
     while (1){
+        // In case still blocked
+        // Does not stack so there is no problem to use this if not blocked
+        unblock_SIGCHLD();
+
         // Ignore signals related to terminal
         ignore_terminal_signals();
 
@@ -88,12 +92,12 @@ int main(void){
         
         // Gets and processes next command
         // SIGCHLD is blocked due to critical section
-        //block_SIGCHLD();
+        block_SIGCHLD();
         get_command(inputBuffer, MAX_LINE, args, &background);
 
 
         if (args[0] == NULL){// Command is empty
-            //unblock_SIGCHLD();             
+            unblock_SIGCHLD();             
             continue;
         }
 
@@ -112,7 +116,7 @@ int main(void){
                 // [----------------- CHILDREN CODE ONLY! ------------------------]
                 // 
                 // Unblock in children, blocked since get_command input
-                //unblock_SIGCHLD();
+                unblock_SIGCHLD();
                 
                 // Child processes are assigned a gid that differs from parent id
                 new_process_group(getpid());
@@ -170,7 +174,7 @@ int main(void){
 
                     // End of critical section
                     // Blocked since getting command input 
-                    //unblock_SIGCHLD();
+                    unblock_SIGCHLD();
 
 
                 } else { // We execute in background
