@@ -29,9 +29,8 @@ void vash_signalHandler(int signal) {
                 //--------------------------
                 // ANALISIS OF STATUS RES
                 //--------------------------
-                if (status_res == EXITED || status_res == SIGNALED){
+               if (status_res == EXITED || status_res == SIGNALED){
                     // JOB IS EITHER EXITED OR SIGNALED 
-                    
                     // Anounce end
                     fprintf(stderr, ERRORSTR" - Job '%s' was finished.\n", job->command);
                     

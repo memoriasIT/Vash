@@ -1,4 +1,5 @@
 #include "config.h"
+#include "internalCommands.h"
 
 #include <stdio.h>
 #include <string.h>
@@ -8,6 +9,7 @@
 
 // Internal functions
 void cd(int nargs, const char* args[]);
+void jobs(int nargs, const char* args[]);
 
 // Map function in struct
 typedef struct {
@@ -17,6 +19,7 @@ typedef struct {
 
 static vash_functionmap internal_funcs[] = {
     { "cd", cd },
+    { "jobs", jobs },
     { NULL, NULL }
 };
 
@@ -60,5 +63,11 @@ void cd(int nargs, const char* args[]){
         if (chdir(args[1]) == -1)
                 fprintf(stderr, ERRORSTR" - Error in cd: %s\n", strerror(errno));
     }
+
+}
+
+
+void jobs(int nargs, const char* args[]) {
+    print_job_list(job_list);
 
 }

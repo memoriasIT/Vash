@@ -103,8 +103,8 @@ int main(void){
 
         // Check if command is internal
         // If internal, function called in internalCommands.c and return 0
-        // Else return -1 and a fork is needed
-        if (isInternal((const char*) args) == -1){
+        // Else return -1 (it's not internal) and a fork is needed
+        if (isInternal((const char**) args) == -1){
             // Child created
             pid_fork = fork();
 
@@ -135,7 +135,6 @@ int main(void){
                 // [------------------ PARENT CODE ONLY! -------------------------]
                 // 
                 if (background == 0){ // We execute in foreground
-                    //unblock_SIGCHLD(); // End of critical section             
                     set_terminal(pid_fork); // Set the control of terminal to child
                   
                     // We wait child, check man 2 wait for options details
@@ -153,7 +152,7 @@ int main(void){
 
                     
                     // Print information about the process
-                    if (status_res != EXITED) {
+                    if (status_res == EXITED) {
                         // Process was exited
                          fprintf(stderr, "\tpid: %d, command: %s was exited.\n",
                             pid_fork, args[0]);
@@ -165,7 +164,7 @@ int main(void){
 
                     } else {
                         // Process was suspended
-                        //add_job(job_list, new_job(pid_fork, args[0], STOPPED));
+                        add_job(job_list, new_job(pid_fork, args[0], STOPPED));
                         
                         fprintf(stderr, "\tpid: %d, command: %s was suspended.\n",
                             pid_fork, args[0]);
@@ -178,10 +177,16 @@ int main(void){
 
 
                 } else { // We execute in background
+                    // Critical section start
+                    block_SIGCHLD();
+                    
                     // Job control to avoid defunct processes
                     // void add_job(job *list, job*item)
                     // job* new_job(pid_t pid, const char *command, enum job_state state)
                     add_job(job_list, new_job(pid_fork, args[0], BACKGROUND));
+
+                    // Critical section end
+                    unblock_SIGCHLD();
                     
                     fprintf(stderr, "Background job running... pid: %d, command: %s\n", 
                             pid_fork, args[0]);
